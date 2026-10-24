@@ -1,0 +1,19 @@
+{
+  "capabilities": [
+    {
+      "id": "browser",
+      "why": "The agent operates an isolated Chromium browser via CDP and live viewer inside the Celesto microVM, allowing dynamic navigation of hostile job listings and untrusted web portals without exposing the host operating system or browser cache to cross-site scripting, malicious popups, or client-side exploits.",
+      "evidence_path": "job_agent.py"
+    },
+    {
+      "id": "safety_hooks",
+      "why": "Pre-execution command inspection interceptors inspect every command issued by the agent, evaluating arguments against strict security policies and blocking destructive patterns (such as recursive root file deletions or suspicious curl exfiltrations) before they reach the guest VM.",
+      "evidence_path": "src/safety_hooks.py"
+    },
+    {
+      "id": "snapshots",
+      "why": "The system captures microVM memory and disk state checkpoints prior to high-risk navigation and package installation steps, enabling instantaneous zero-overhead rollback when a downstream step fails, thereby avoiding costly full machine re-provisioning.",
+      "evidence_path": "src/agent.py"
+    }
+  ]
+}
