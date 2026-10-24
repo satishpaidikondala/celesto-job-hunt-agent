@@ -2,7 +2,7 @@
 
 **Celesto Job Hunt Desk** is an autonomous AI agent system built for job seekers, career transitioners, and technical recruiters to safely discover, inspect, and evaluate high-volume tech job applications across untrusted remote boards. Real-world job portals embed unvetted third-party DOMs, tracker scripts, and hidden prompt-injection attacks; running autonomous browser and script agents directly on a host machine or container risks severe security exploits, credential leakage, and filesystem corruption. Our architecture strictly confines all dangerous actions—sandboxed Chromium browser navigation via CDP, requirements parsing, and spreadsheet compilation—inside hardware-virtualized **Celesto microVM sandboxes** with dedicated Firecracker/QEMU kernels. Governed by a trusted Docker Compose control plane (FastAPI `:8080` + PostgreSQL run ledger), the agent intercepts hostile prompt injections via pre-execution safety hooks, performs instant snapshot rollbacks on mid-task failures, and emits verified, auditable outputs (`jobs.csv`) while guaranteeing that untrusted guest code never touches the host.
 
-> 🎥 **Walkthrough Video**: Watch on YouTube: [Celesto Job Hunt Desk Live Demo](https://www.youtube.com/watch?v=REPLACE_WITH_YOUR_YOUTUBE_ID) (under 3 minutes, showing live microVM boot, browser automation, and CSV generation).
+> 🎥 **Walkthrough Video**: Watch on YouTube: [Celesto Job Hunt Desk Live Demo](https://youtu.be/NwyfkZC7_g8) (under 3 minutes, showing live microVM boot, browser automation, and CSV generation).
 
 ---
 
@@ -163,7 +163,7 @@ pytest -v tests/test_reports.py
 ## Demo Video
 
 A live walkthrough demonstration (under 3 minutes) is available:
-- 📺 **YouTube Link**: [Celesto Job Hunt Desk — Live Demo Walkthrough](https://www.youtube.com/watch?v=REPLACE_WITH_YOUR_YOUTUBE_ID)
+- 📺 **YouTube Link**: [Celesto Job Hunt Desk — Live Demo Walkthrough](https://youtu.be/NwyfkZC7_g8)
 - **Live Guest Visibility**: Demonstrates the Celesto microVM booting in ~490ms, the sandboxed Chromium browser inspecting dynamic job cards, pre-execution safety hooks blocking prompt injection exfiltrations in real time, sub-80ms snapshot rollback at Step 7, and verified compilation to `jobs.csv`.
 
 ---
