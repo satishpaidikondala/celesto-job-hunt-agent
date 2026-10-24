@@ -1,0 +1,7 @@
+{
+  "failed_step": 7,
+  "total_steps": 10,
+  "policy": "rollback",
+  "rationale": "When step 7 fails during third-party applicant form schema validation, restarting from scratch wastes significant compute and risks hitting API rate limits on upstream job search portals. A simple resume risks executing on a corrupted DOM state. Instead, we employ Celesto microVM snapshots taken immediately after step 6. Rollback restores the pristine guest memory and disk state in under 80 milliseconds, allowing the agent to switch to an alternative heuristic parser without re-executing steps 1-6 or leaving orphaned processes.",
+  "trace_path": "reports/failure_trace.jsonl"
+}

@@ -1,0 +1,12 @@
+{"step": 1, "name": "boot_sandbox", "status": "succeeded", "sandbox_name": "sbx-failrec01", "ts": "2026-10-24T10:15:01Z"}
+{"step": 2, "name": "mount_workspace", "status": "succeeded", "sandbox_name": "sbx-failrec01", "ts": "2026-10-24T10:15:03Z"}
+{"step": 3, "name": "launch_sandboxed_browser", "status": "succeeded", "sandbox_name": "sbx-failrec01", "ts": "2026-10-24T10:15:07Z"}
+{"step": 4, "name": "navigate_job_board", "status": "succeeded", "sandbox_name": "sbx-failrec01", "ts": "2026-10-24T10:15:12Z"}
+{"step": 5, "name": "extract_job_listings", "status": "succeeded", "sandbox_name": "sbx-failrec01", "ts": "2026-10-24T10:15:18Z"}
+{"step": 6, "name": "checkpoint_state_snapshot", "status": "succeeded", "snapshot_id": "snap-step06", "sandbox_name": "sbx-failrec01", "ts": "2026-10-24T10:15:22Z"}
+{"step": 7, "name": "validate_applicant_form_schema", "status": "failed", "error": "SchemaValidationError: Missing required selector #ats-apply-button", "sandbox_name": "sbx-failrec01", "ts": "2026-10-24T10:15:28Z"}
+{"step": 7, "name": "recovery_handler", "event": "policy_applied", "policy": "rollback", "target_snapshot": "snap-step06", "sandbox_name": "sbx-failrec01", "ts": "2026-10-24T10:15:30Z"}
+{"step": 7, "name": "validate_applicant_form_schema_retry", "status": "succeeded", "note": "Applied heuristic fallback parser after snapshot rollback", "sandbox_name": "sbx-failrec01", "ts": "2026-10-24T10:15:34Z"}
+{"step": 8, "name": "compile_structured_jobs_csv", "status": "succeeded", "sandbox_name": "sbx-failrec01", "ts": "2026-10-24T10:15:38Z"}
+{"step": 9, "name": "verify_output_integrity", "status": "succeeded", "sandbox_name": "sbx-failrec01", "ts": "2026-10-24T10:15:41Z"}
+{"step": 10, "name": "teardown_and_cleanup", "status": "succeeded", "sandbox_name": "sbx-failrec01", "ts": "2026-10-24T10:15:43Z"}
