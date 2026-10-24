@@ -1,0 +1,6 @@
+{
+  "who": "Job seekers, career transitioners, and recruiters managing high-volume tech applications across remote boards",
+  "agent_work": "Navigates live job listings inside an isolated browser sandbox, extracts role requirements, evaluates ATS matching, and produces verified application records",
+  "proof_output": "Verified jobs.csv spreadsheet and ledger application records",
+  "idea_source": "idea_bank"
+}
