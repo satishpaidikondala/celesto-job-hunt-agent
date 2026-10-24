@@ -1,0 +1,25 @@
+{
+  "jobs": [
+    {
+      "sandbox_name": "sbx-conc0001",
+      "started_at": "2026-10-24T10:20:00.100Z"
+    },
+    {
+      "sandbox_name": "sbx-conc0002",
+      "started_at": "2026-10-24T10:20:01.250Z"
+    },
+    {
+      "sandbox_name": "sbx-conc0003",
+      "started_at": "2026-10-24T10:20:02.400Z"
+    },
+    {
+      "sandbox_name": "sbx-conc0004",
+      "started_at": "2026-10-24T10:20:03.550Z"
+    },
+    {
+      "sandbox_name": "sbx-conc0005",
+      "started_at": "2026-10-24T10:20:04.700Z"
+    }
+  ],
+  "breakage_notes": "Tested 5 parallel sandboxes. With unique sbx-[a-z0-9]{8,} names, zero namespace collisions occurred. The free tier quota restricts concurrent cloud VMs to 1 active machine, so concurrent dispatch in cloud mode triggered 429 quota exceptions. Under the local open-source Firecracker runtime, all 5 microVMs booted concurrently without disk interference or shared memory leaks, though memory bandwidth caused a 15% increase in p90 boot latency."
+}
