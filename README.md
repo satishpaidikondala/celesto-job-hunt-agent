@@ -4,7 +4,7 @@
 
 > 🎥 **Walkthrough Video**: Watch on YouTube: [Celesto Job Hunt Desk Live Demo](https://youtu.be/NwyfkZC7_g8) (under 3 minutes, showing live microVM boot, browser automation, and CSV generation).
 >
-> 🌐 **Live Interactive Deployment**: [Open Celesto Job Hunt Desk](https://forty-feet-leave.loca.lt) *(Tunnel endpoint IP: `49.15.200.133`)*. Evaluators can directly interact with the live microVM runner, trigger prompt-injection containment defenses, and inspect the PostgreSQL run ledger in real time! Also available locally at `http://localhost:8080/`.
+> 🌐 **Live Interactive Deployment**: [Open Celesto Job Hunt Desk](https://6e5c7f0d361665.lhr.life). Evaluators can directly interact with the live microVM runner, trigger prompt-injection containment defenses, and inspect the PostgreSQL run ledger in real time! Also available locally at `http://localhost:8080/`.
 
 ---
 

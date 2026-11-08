@@ -18,3 +18,4 @@ services:
         value: gemini-1.5-flash
       - key: LLM_API_KEY
         value: replace-me
+
