@@ -27,5 +27,4 @@ htmlcov/
 # Logs
 install.log
 
-# Demo (excluded from repo per user preference)
-demo/
+

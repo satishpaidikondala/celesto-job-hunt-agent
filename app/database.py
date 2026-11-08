@@ -8,17 +8,19 @@ logger = logging.getLogger("ledger.db")
 
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://ledger:ledger@ledger:5432/ledger")
 
-# Handle PostgreSQL vs SQLite engine parameters
-connect_args = {}
-if DATABASE_URL.startswith("sqlite"):
-    connect_args = {"check_same_thread": False}
+def get_engine():
+    if DATABASE_URL.startswith("sqlite"):
+        return create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+    try:
+        eng = create_engine(DATABASE_URL, connect_args={"connect_timeout": 2})
+        with eng.connect() as conn:
+            pass
+        return eng
+    except Exception as e:
+        logger.warning(f"Could not connect to {DATABASE_URL}: {e}. Falling back to SQLite.")
+        return create_engine("sqlite:///./ledger.db", connect_args={"check_same_thread": False})
 
-try:
-    engine = create_engine(DATABASE_URL, connect_args=connect_args)
-except Exception as e:
-    logger.warning(f"Could not connect to {DATABASE_URL}: {e}. Falling back to SQLite.")
-    engine = create_engine("sqlite:///./ledger.db", connect_args={"check_same_thread": False})
-
+engine = get_engine()
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
@@ -35,7 +37,11 @@ class RunModel(Base):
 
 
 def init_db():
-    Base.metadata.create_all(bind=engine)
+    try:
+        Base.metadata.create_all(bind=engine)
+    except Exception as e:
+        logger.error(f"Error creating tables: {e}")
+        return
     # Seed default row if table is empty or row does not exist
     db = SessionLocal()
     try:

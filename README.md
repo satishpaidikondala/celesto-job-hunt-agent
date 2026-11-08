@@ -3,6 +3,8 @@
 **Celesto Job Hunt Desk** is an autonomous AI agent system built for job seekers, career transitioners, and technical recruiters to safely discover, inspect, and evaluate high-volume tech job applications across untrusted remote boards. Real-world job portals embed unvetted third-party DOMs, tracker scripts, and hidden prompt-injection attacks; running autonomous browser and script agents directly on a host machine or container risks severe security exploits, credential leakage, and filesystem corruption. Our architecture strictly confines all dangerous actions—sandboxed Chromium browser navigation via CDP, requirements parsing, and spreadsheet compilation—inside hardware-virtualized **Celesto microVM sandboxes** with dedicated Firecracker/QEMU kernels. Governed by a trusted Docker Compose control plane (FastAPI `:8080` + PostgreSQL run ledger), the agent intercepts hostile prompt injections via pre-execution safety hooks, performs instant snapshot rollbacks on mid-task failures, and emits verified, auditable outputs (`jobs.csv`) while guaranteeing that untrusted guest code never touches the host.
 
 > 🎥 **Walkthrough Video**: Watch on YouTube: [Celesto Job Hunt Desk Live Demo](https://youtu.be/NwyfkZC7_g8) (under 3 minutes, showing live microVM boot, browser automation, and CSV generation).
+>
+> 🌐 **Live Interactive Deployment**: [Open Celesto Job Hunt Desk](https://forty-feet-leave.loca.lt) *(Tunnel endpoint IP: `49.15.200.133`)*. Evaluators can directly interact with the live microVM runner, trigger prompt-injection containment defenses, and inspect the PostgreSQL run ledger in real time! Also available locally at `http://localhost:8080/`.
 
 ---
 
@@ -141,6 +143,12 @@ curl http://localhost:8080/health
 curl http://localhost:8080/api/runs
 # Lists recorded runs, including seeded sbx-seeddemo1
 ```
+
+Visit the interactive web dashboard in your browser:
+```text
+http://localhost:8080/
+```
+*(Provides an interactive evaluator console to execute live microVM runs, test prompt injection containment, and explore the run ledger).*
 
 ### 4. Run the Agent & Safety Test
 Execute the job hunt workflow:

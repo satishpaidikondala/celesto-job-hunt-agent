@@ -14,11 +14,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy source code, seeds, reports, logs
+# Copy source code, seeds, reports, logs, tests, root documents
 COPY app/ ./app/
+COPY src/ ./src/
 COPY seeds/ ./seeds/
 COPY reports/ ./reports/
 COPY logs/ ./logs/
+COPY tests/ ./tests/
+COPY job_agent.py .
+COPY jobs.csv .
+COPY docker-compose.yml .
+COPY Dockerfile .
+COPY .env.example .
+COPY README.md .
 
 # Environment defaults
 ENV PYTHONUNBUFFERED=1
