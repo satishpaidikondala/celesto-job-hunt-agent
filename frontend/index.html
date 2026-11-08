@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celesto Job Hunt Desk — Autonomous Agent Execution & Run Ledger</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f5f3ff',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            900: '#4c1d95',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome & Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-[#030712] text-slate-100 min-h-screen flex flex-col selection:bg-purple-600 selection:text-white">
+
+    <!-- Navbar -->
+    <header class="border-b border-slate-800/80 bg-[#030712]/90 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-indigo-500 to-purple-600 flex items-center justify-center font-bold text-white shadow-lg shadow-purple-500/25">
+                    <i class="fa-solid fa-cube text-lg"></i>
+                </div>
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">Celesto Job Hunt Desk</span>
+                        <span class="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 font-mono font-semibold">Standalone Frontend</span>
+                    </div>
+                    <p class="text-[11px] text-slate-400">Hardware-Isolated MicroVM Sandboxes & Run Ledger</p>
+                </div>
+            </div>
+
+            <!-- Health & Quick Links -->
+            <div class="flex items-center space-x-3 sm:space-x-4">
+                <div id="backendHealthBadge" class="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono font-medium">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span id="backendHealthText">Backend: Connected</span>
+                </div>
+                <button onclick="toggleApiSettings()" class="text-xs text-slate-300 hover:text-white px-2.5 py-1.5 rounded-lg border border-slate-800 hover:bg-slate-900 transition flex items-center space-x-1.5" title="Configure Backend URL">
+                    <i class="fa-solid fa-gear text-slate-400"></i>
+                    <span class="hidden md:inline">API Config</span>
+                </button>
+                <a href="https://github.com/satishpaidikondala/celesto-job-hunt-agent" target="_blank" class="text-xs bg-purple-600 hover:bg-purple-500 text-white font-medium px-3.5 py-1.5 rounded-lg transition shadow-md shadow-purple-600/25 flex items-center space-x-1.5">
+                    <i class="fa-brands fa-github"></i>
+                    <span>GitHub Repo</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Optional Backend URL Settings Drawer -->
+        <div id="apiSettingsDrawer" class="hidden border-t border-slate-800 bg-slate-900/95 px-4 py-3">
+            <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono">
+                <div class="flex items-center space-x-2 w-full sm:w-auto">
+                    <span class="text-slate-400">Backend API URL:</span>
+                    <input id="apiBaseInput" type="text" value="" placeholder="e.g. http://localhost:8080" 
+                        class="bg-slate-950 border border-slate-700 px-3 py-1 rounded text-white flex-1 sm:w-72 focus:outline-none focus:border-cyan-500">
+                    <button onclick="saveApiBase()" class="bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1 rounded font-sans font-semibold">Save</button>
+                    <button onclick="resetApiBase()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-1 rounded">Reset</button>
+                </div>
+                <div class="text-slate-500 text-[11px]">
+                    Current active base: <span id="currentApiBaseText" class="text-cyan-400">auto (relative)</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        
+        <!-- Hero Overview -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 relative overflow-hidden glow-purple">
+            <div class="absolute -right-24 -top-24 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-24 -bottom-24 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="relative z-10 max-w-4xl space-y-4">
+                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono font-medium">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Celesto MicroVM Isolation &bull; Anti-Prompt Injection Defense</span>
+                </div>
+                <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-snug">
+                    Safe Autonomous Job Discovery Powered by Celesto MicroVMs
+                </h1>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    Real-world tech job boards embed unvetted DOMs, tracking pixels, and hidden prompt-injection attacks. Running scraping and application agents directly on your host machine risks credential theft, command injection, and filesystem corruption.
+                </p>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    <strong>The Solution:</strong> Our control plane strictly executes sandboxed Chromium browser navigation (CDP), ATS extraction, and spreadsheet compilation inside <strong>dedicated hardware microVMs</strong>. Pre-execution safety hooks intercept hostile exploits before guest dispatch, and snapshot checkpoints enable instantaneous sub-80ms rollback.
+                </p>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 font-mono text-xs">
+                    <div class="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800 flex items-center space-x-2">
+                        <i class="fa-solid fa-bolt text-amber-400"></i>
+                        <span>~490ms Boot Latency</span>
+                    </div>
+                    <div class="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800 flex items-center space-x-2">
+                        <i class="fa-solid fa-rotate-left text-cyan-400"></i>
+                        <span>&lt;80ms Rollback</span>
+                    </div>
+                    <div class="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800 flex items-center space-x-2">
+                        <i class="fa-solid fa-shield-virus text-emerald-400"></i>
+                        <span>Pre-Exec Interceptor</span>
+                    </div>
+                    <div class="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800 flex items-center space-x-2">
+                        <i class="fa-solid fa-database text-purple-400"></i>
+                        <span>PostgreSQL Ledger</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Operations Console -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            
+            <!-- Controls Column -->
+            <div class="lg:col-span-5 space-y-6">
+                
+                <!-- Action Card -->
+                <div class="glass-panel rounded-2xl p-6 space-y-5">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <h2 class="font-bold text-sm text-white flex items-center space-x-2">
+                            <i class="fa-solid fa-sliders text-cyan-400"></i>
+                            <span>Evaluator Interactive Controls</span>
+                        </h2>
+                        <span id="systemStateBadge" class="text-[11px] px-2 py-0.5 rounded-full bg-slate-800 border border-slate-700 text-slate-300 font-mono">Standby</span>
+                    </div>
+
+                    <!-- Target Query -->
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <label class="block text-xs font-semibold text-slate-300">Target Role Search Query</label>
+                            <span class="text-[10px] text-slate-500 font-mono">Presets:</span>
+                        </div>
+                        <input id="targetQuery" type="text" value="Staff AI Infrastructure Engineer Remote" 
+                            class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 font-mono transition shadow-inner">
+                        
+                        <!-- Quick Presets -->
+                        <div class="flex flex-wrap gap-1.5 pt-1">
+                            <button onclick="setQuery('Staff AI Infrastructure Engineer')" class="text-[10px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-mono border border-slate-700 transition">AI Infra</button>
+                            <button onclick="setQuery('Distributed Systems Engineer Remote')" class="text-[10px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-mono border border-slate-700 transition">Distributed Systems</button>
+                            <button onclick="setQuery('Autonomous Agent Security Architect')" class="text-[10px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-mono border border-slate-700 transition">Security Architect</button>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="space-y-2.5 pt-1">
+                        <button onclick="runAgentDemo()" id="btnRunAgent" class="w-full bg-gradient-to-r from-cyan-600 via-indigo-600 to-purple-600 hover:from-cyan-500 hover:to-purple-500 text-white font-bold py-3 px-4 rounded-xl transition shadow-lg shadow-cyan-500/20 text-xs flex items-center justify-center space-x-2 group">
+                            <i class="fa-solid fa-play group-hover:scale-110 transition"></i>
+                            <span>1. Execute Agent in Fresh MicroVM</span>
+                        </button>
+                        
+                        <button onclick="runContainmentDemo()" id="btnContainment" class="w-full bg-red-950/60 hover:bg-red-900/80 text-red-200 border border-red-800/60 font-semibold py-2.5 px-4 rounded-xl transition text-xs flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-shield-virus text-red-400"></i>
+                            <span>2. Test Hostile Prompt Injection (Containment)</span>
+                        </button>
+
+                        <button onclick="runRollbackDemo()" id="btnRollback" class="w-full bg-amber-950/60 hover:bg-amber-900/80 text-amber-200 border border-amber-800/60 font-semibold py-2.5 px-4 rounded-xl transition text-xs flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-clock-rotate-left text-amber-400"></i>
+                            <span>3. Simulate Step 7 Failure & Snapshot Rollback</span>
+                        </button>
+                    </div>
+
+                    <!-- Sandbox Specs -->
+                    <div class="pt-4 border-t border-slate-800 text-[11px] font-mono text-slate-400 space-y-1.5">
+                        <div class="flex justify-between items-center">
+                            <span>Execution Target:</span>
+                            <span class="text-purple-300 font-bold">celesto_sandbox</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Isolation Boundary:</span>
+                            <span class="text-emerald-400 font-bold">Firecracker microVM (HW-Isolated)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Safety Policy:</span>
+                            <span class="text-cyan-300">Pre-Exec Regex Inspection & Audit</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Verified Jobs Preview Card -->
+                <div class="glass-panel rounded-2xl p-6 space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                        <h3 class="font-bold text-sm text-white flex items-center space-x-2">
+                            <i class="fa-solid fa-file-csv text-emerald-400"></i>
+                            <span>Verified Output (`jobs.csv`)</span>
+                        </h3>
+                        <a id="downloadJobsBtn" href="/download/jobs.csv" class="text-xs bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 px-2.5 py-1 rounded-lg transition flex items-center space-x-1">
+                            <i class="fa-solid fa-download"></i>
+                            <span>Download CSV</span>
+                        </a>
+                    </div>
+                    <div id="jobsPreview" class="bg-slate-900/90 rounded-xl p-3 border border-slate-800 overflow-x-auto text-xs font-mono text-slate-300 max-h-56">
+                        <div class="text-slate-500 italic py-2">Loading verified jobs...</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Live Terminal & Telemetry Stream -->
+            <div class="lg:col-span-7 space-y-4">
+                <div class="glass-panel rounded-2xl overflow-hidden flex flex-col h-[520px]">
+                    <div class="bg-slate-900/95 px-4 py-3 border-b border-slate-800 flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+                            <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+                            <span class="ml-2 font-mono text-xs text-slate-400 font-medium">celesto-guest-microvm: /workspace</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span id="terminalStatus" class="font-mono text-xs text-cyan-400 font-semibold flex items-center space-x-1.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                                <span>READY</span>
+                            </span>
+                            <button onclick="clearTerminal()" class="text-[11px] text-slate-500 hover:text-slate-300 px-2 py-0.5 rounded border border-slate-800 hover:bg-slate-800 transition">Clear</button>
+                        </div>
+                    </div>
+                    
+                    <div id="terminalBody" class="p-4 bg-slate-950 font-mono text-xs leading-relaxed overflow-y-auto flex-1 space-y-1.5 text-slate-300 terminal-scroll">
+                        <div class="text-slate-500">// Celesto microVM Control Plane initialized.</div>
+                        <div class="text-slate-500">// Dedicated kernel ready on Firecracker. PostgreSQL Ledger active.</div>
+                        <div class="text-purple-400">> Standby: Click any action button on the left panel to execute within the microVM...<span class="cursor-blink">_</span></div>
+                    </div>
+                </div>
+
+                <!-- Live Metrics Ticker -->
+                <div class="grid grid-cols-3 gap-3">
+                    <div class="glass-panel rounded-xl p-3.5 text-center">
+                        <div class="text-slate-400 text-[11px]">Boot-to-Ready Time</div>
+                        <div class="text-lg font-extrabold text-cyan-400 font-mono">0.490s</div>
+                        <div class="text-[10px] text-slate-500">Median across 20 runs</div>
+                    </div>
+                    <div class="glass-panel rounded-xl p-3.5 text-center">
+                        <div class="text-slate-400 text-[11px]">Snapshot Rollback</div>
+                        <div class="text-lg font-extrabold text-amber-400 font-mono">&lt; 80ms</div>
+                        <div class="text-[10px] text-slate-500">Zero re-boot overhead</div>
+                    </div>
+                    <div class="glass-panel rounded-xl p-3.5 text-center">
+                        <div class="text-slate-400 text-[11px]">Host Containment</div>
+                        <div class="text-lg font-extrabold text-emerald-400 font-mono">100% Blocked</div>
+                        <div class="text-[10px] text-slate-500">Zero host leakages</div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Live PostgreSQL Run Ledger -->
+        <section class="glass-panel rounded-2xl p-6 sm:p-8 space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-4">
+                <div>
+                    <h2 class="text-lg font-bold text-white flex items-center space-x-2">
+                        <i class="fa-solid fa-database text-purple-400"></i>
+                        <span>Live PostgreSQL Run Ledger (`GET /api/runs`)</span>
+                    </h2>
+                    <p class="text-xs text-slate-400">Auditable record of all sandbox execution targets, problems, and lifecycle states</p>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button onclick="fetchRuns()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700 transition flex items-center space-x-1.5">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                        <span>Refresh Table</span>
+                    </button>
+                    <button onclick="createTestRun()" class="text-xs bg-purple-600 hover:bg-purple-500 text-white font-medium px-3.5 py-1.5 rounded-lg transition flex items-center space-x-1.5">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Record Manual Run</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="overflow-x-auto rounded-xl border border-slate-800">
+                <table class="w-full text-left text-xs font-mono">
+                    <thead class="bg-slate-900/90 text-slate-400 uppercase tracking-wider border-b border-slate-800 text-[11px]">
+                        <tr>
+                            <th class="py-3 px-4">Run Identifier</th>
+                            <th class="py-3 px-4">Sandbox Identifier</th>
+                            <th class="py-3 px-4">Problem Task</th>
+                            <th class="py-3 px-4">Execution Target</th>
+                            <th class="py-3 px-4">State</th>
+                            <th class="py-3 px-4">Created At</th>
+                        </tr>
+                    </thead>
+                    <tbody id="runsTableBody" class="divide-y divide-slate-800/80 text-slate-300">
+                        <tr>
+                            <td colspan="6" class="py-4 text-center text-slate-500">Loading ledger records from PostgreSQL...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Evaluation Proofs & Audit Specifications -->
+        <section class="space-y-4">
+            <h2 class="text-lg font-bold text-white flex items-center space-x-2">
+                <i class="fa-solid fa-clipboard-check text-cyan-400"></i>
+                <span>Evaluation Proofs & Specifications (12/12 Passing)</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                
+                <a href="/reports/capabilities.json" target="_blank" class="glass-panel p-4 rounded-xl hover:border-cyan-500/50 transition group space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-xs text-white group-hover:text-cyan-400 transition font-mono">capabilities.json</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500 group-hover:text-cyan-400 transition"></i>
+                    </div>
+                    <p class="text-[11px] text-slate-400">Documents Browser Runtime via CDP, Pre-Execution Safety Hooks, and Memory Snapshots.</p>
+                </a>
+
+                <a href="/reports/containment.json" target="_blank" class="glass-panel p-4 rounded-xl hover:border-emerald-500/50 transition group space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-xs text-white group-hover:text-emerald-400 transition font-mono">containment.json</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500 group-hover:text-emerald-400 transition"></i>
+                    </div>
+                    <p class="text-[11px] text-slate-400">Audit proof of prompt-injection exfiltration interception: blocked=true, host_untouched=true.</p>
+                </a>
+
+                <a href="/reports/reliability.json" target="_blank" class="glass-panel p-4 rounded-xl hover:border-purple-500/50 transition group space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-xs text-white group-hover:text-purple-400 transition font-mono">reliability.json</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500 group-hover:text-purple-400 transition"></i>
+                    </div>
+                    <p class="text-[11px] text-slate-400">20 fresh microVM runs: 85% success rate, 15.80s median, ~490ms boot, $0.01038 cost.</p>
+                </a>
+
+                <a href="/reports/postmortem.md" target="_blank" class="glass-panel p-4 rounded-xl hover:border-amber-500/50 transition group space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-xs text-white group-hover:text-amber-400 transition font-mono">postmortem.md</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500 group-hover:text-amber-400 transition"></i>
+                    </div>
+                    <p class="text-[11px] text-slate-400">Root-cause engineering analysis of the 3 failure runs and architectural mitigations.</p>
+                </a>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/80 mt-12 py-6 text-center text-xs text-slate-500 font-mono">
+        <p>Built with Google Gemini in Antigravity IDE &bull; Powered by CelestoAI MicroVM Sandboxes &bull; PostgreSQL Run Ledger</p>
+    </footer>
+
+    <!-- App Script -->
+    <script src="app.js"></script>
+</body>
+</html>

@@ -16,6 +16,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy source code, seeds, reports, logs, tests, root documents
 COPY app/ ./app/
+COPY frontend/ ./frontend/
 COPY src/ ./src/
 COPY seeds/ ./seeds/
 COPY reports/ ./reports/

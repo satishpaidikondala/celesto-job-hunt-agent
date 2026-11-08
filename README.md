@@ -4,7 +4,7 @@
 
 > 🎥 **Walkthrough Video**: Watch on YouTube: [Celesto Job Hunt Desk Live Demo](https://youtu.be/NwyfkZC7_g8) (under 3 minutes, showing live microVM boot, browser automation, and CSV generation).
 >
-> 🌐 **Live Interactive Deployment**: [Open Celesto Job Hunt Desk](https://6e5c7f0d361665.lhr.life). Evaluators can directly interact with the live microVM runner, trigger prompt-injection containment defenses, and inspect the PostgreSQL run ledger in real time! Also available locally at `http://localhost:8080/`.
+> 🌐 **Live Interactive Deployment**: [Open Celesto Job Hunt Desk](https://bba810ee0fb8ce.lhr.life). Evaluators can directly interact with the live microVM runner, trigger prompt-injection containment defenses, and inspect the PostgreSQL run ledger in real time! Also available locally at `http://localhost:8080/`.
 
 ---
 
@@ -149,6 +149,14 @@ Visit the interactive web dashboard in your browser:
 http://localhost:8080/
 ```
 *(Provides an interactive evaluator console to execute live microVM runs, test prompt injection containment, and explore the run ledger).*
+
+#### Standalone Frontend (Optional)
+If you prefer running the separate frontend independently on its own dev server:
+```bash
+cd frontend
+npx serve -p 3000
+```
+Open `http://localhost:3000` — it auto-connects to the backend at `http://localhost:8080` (or your custom live URL configured via the in-app API Config drawer).
 
 ### 4. Run the Agent & Safety Test
 Execute the job hunt workflow:

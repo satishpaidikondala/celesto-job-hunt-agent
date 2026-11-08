@@ -1,0 +1,79 @@
+/* Modern Terminal & Glassmorphic Styling for Celesto Job Hunt Desk */
+
+@layer utilities {
+    .glass-panel {
+        background: rgba(15, 23, 42, 0.65);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+
+    .glow-purple {
+        box-shadow: 0 0 45px -10px rgba(139, 92, 246, 0.25);
+    }
+
+    .glow-cyan {
+        box-shadow: 0 0 45px -10px rgba(6, 182, 212, 0.25);
+    }
+}
+
+/* Custom Scrollbars */
+.terminal-scroll::-webkit-scrollbar,
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.terminal-scroll::-webkit-scrollbar-track,
+::-webkit-scrollbar-track {
+    background: #030712;
+}
+
+.terminal-scroll::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 9999px;
+}
+
+.terminal-scroll::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+/* Cursor Blink */
+.cursor-blink {
+    display: inline-block;
+    animation: blink 1s step-end infinite;
+    color: #38bdf8;
+    font-weight: bold;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Pulsing Badge Indicator */
+@keyframes pulseGlow {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(0.96);
+    }
+}
+
+.pulse-glow {
+    animation: pulseGlow 2s infinite ease-in-out;
+}
+
+/* Smooth Table hover transitions */
+tbody tr {
+    transition: background-color 0.15s ease-in-out;
+}
+tbody tr:hover {
+    background-color: rgba(30, 41, 59, 0.5);
+}
