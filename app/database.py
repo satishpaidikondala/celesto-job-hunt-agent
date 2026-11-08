@@ -18,7 +18,8 @@ def get_engine():
         return eng
     except Exception as e:
         logger.warning(f"Could not connect to {DATABASE_URL}: {e}. Falling back to SQLite.")
-        return create_engine("sqlite:///./ledger.db", connect_args={"check_same_thread": False})
+        db_path = "/tmp/ledger.db" if os.path.exists("/tmp") else "./ledger.db"
+        return create_engine(f"sqlite:///{db_path}", connect_args={"check_same_thread": False})
 
 engine = get_engine()
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
